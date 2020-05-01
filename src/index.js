@@ -1,14 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import userReducer from './redux/reducers/userReducer';
+import thunk from 'redux-thunk';
+import App from './App';
+
+const store = createStore(userReducer, applyMiddleware(thunk));
+
+const theme = createMuiTheme({
+	palette:{
+	  type: 'dark'
+	}
+  })
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<BrowserRouter>
+			<ThemeProvider
+				theme={theme}>
+					<App />
+			</ThemeProvider>
+		</BrowserRouter>
+	</Provider>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
