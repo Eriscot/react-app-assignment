@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const sql = require('mssql');
 const config = require('./config');
 
@@ -13,6 +13,8 @@ app.on('ready', () => {
         }
     })
     mainWindow.loadURL('http://localhost:3000/');
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu);
 });
 
 ipcMain.on('get user', async (event, data) => {
@@ -38,27 +40,27 @@ ipcMain.on('get user', async (event, data) => {
     } catch(e) {
         console.error(e);
     }
+});
 
-    //         (error) => {
-        //     console.log(data);
-        //     if(error) {
-        //         mainWindow.webContents.send('return user', {
-        //             error
-        //         });
-        //         console.error(error);
-        //     } else {
-        //         req.query(`SELECT TOP 1 FROM [User] WHERE nickname = ${data.nickname} AND password = ${data.password}`, (error, result) => {
-        //             if(error) {
-        //                 console.error(error);
-        //                 mainWindow.webContents.send('return user', {
-        //                     error
-        //                 });
-        //             } else {
-        //                 mainWindow.webContents.send('return user', {
-        //                     user: result
-        //                 });
-        //             }
-        //         });
-        //     }
-        // });
-})
+const menuTemplate = [
+    {
+        label: 'File',
+        submenu: [
+            {
+                label: 'Exit',
+                aggregator: 'Alt+F4',
+                click: () => {
+                    app.quit();
+                }
+            }
+        ]
+    },
+    {
+        label: 'DEVELOPMENT',
+        submenu: [
+            {
+                role: 'toggleDevTools'
+            }
+        ]
+    }
+]

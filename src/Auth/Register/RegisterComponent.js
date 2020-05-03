@@ -28,25 +28,10 @@ const RegisterComponent = (props) => {
     
     const classes = useStyles();
 
-        // return (
-        //     <AuthFormComponent>
-        //         <TextField 
-        //             type="text" 
-        //             label="Никнейм" 
-        //         />
-        //         <TextField type="text" label="ФИО" />
-        //         <TextField type="password" label="Пароль" />
-        //         <br />
-        //         <Button variant="contained" color="primary" >Подтвердить</Button>
-        //     </AuthFormComponent>
-        // );
-
     return (
         <AuthFormComponent>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                {/* <Paper
-                    className={classes.inside}> */}
                     <div className={classes.paper}>
                         <Avatar className={classes.avatar}>
                             <PersonIcon />

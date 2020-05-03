@@ -13,7 +13,7 @@ function AppComponent(props) {
 				<div className="center">
 					<Loader type="Circles" color="#00BFFF" height={200} width={200} /> 
 				</div>
-				: props.user ? <Dashboard /> : <Auth />}
+				: (props.user ? <Dashboard /> : <Auth />)}
 		</div>
 	);
 }

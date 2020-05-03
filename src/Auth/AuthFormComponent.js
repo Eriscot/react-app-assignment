@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100%'
+        height: '90vh'
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -21,11 +21,7 @@ const AuthFormComponent = (props) => {
             <CssBaseline />
             <div className={classes.formCenter}>
                 <div className="form">
-                    <form onSubmit={(e) => {
-                        e.preventDefault()
-                        console.log('Test');
-                    }
-                    } className={classes.form}>
+                    <form className={classes.form}>
                         {props.children}
                     </form>
                 </div>

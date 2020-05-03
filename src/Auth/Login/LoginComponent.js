@@ -96,12 +96,8 @@ const LoginComponent = (props) => {
                         Вход
                     </Button>
                 </div>
-            {/* </Paper> */}
         </Container>
-        </AuthFormComponent>}
-            {/* <div className={classes.center}>
-                <Loader type="Circles" color="#00BFFF" height={300} width={300} />
-            </div> */}
+        </AuthFormComponent>
         </>
     );
 }
