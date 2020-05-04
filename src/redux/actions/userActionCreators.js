@@ -11,7 +11,7 @@ export function userLogin(payload) {
             console.log(data);
             if(data.error) {
                 setTimeout(() => {
-                    dispatch(userLoginError(data.error))
+                    dispatch(userLoginError(data.error));
                 }, 300);
             } else {
                 setTimeout(() => {
@@ -22,14 +22,54 @@ export function userLogin(payload) {
     }
 }
 
+export function getMagazines() {
+    return async dispatch => {
+        dispatch(getMagazinesStart());
+        ipcRenderer.send('get magazines');
+        ipcRenderer.on('return magazines', async (event, data) => {
+            console.log(data);
+            if(data.error) {
+                await setTimeout(() => {
+                    dispatch(getMagazinesFailed(data.error));
+                }, 100);
+            } else {
+                await setTimeout(() => {
+                    dispatch(getMagazinesSuccess({
+                        title: 'magazines',
+                        values: data.table
+                    }));
+                }, 100)
+            }
+        });
+    }
+}
+
+export function getMagazinesStart() {
+    return {
+        type: USER_ACTIONS.GET_MAGAZINES_START,
+    }
+}
+
+export function getMagazinesFailed(payload) {
+    return {
+        type: USER_ACTIONS.GET_MAGAZINES_FAILED,
+        payload
+    }
+}
+
+export function getMagazinesSuccess(payload) {
+    return {
+        type: USER_ACTIONS.GET_MAGAZINES_SUCCESS,
+        payload
+    }
+}
+
 export function userLogout() {
-    console.log('Test1');
     return async dispatch => {
         dispatch({
             type: USER_ACTIONS.LOGOUT
         });
         await setTimeout(() => {
-            console.log('Test1');
             dispatch(userLogoutSuccess());
         }, 400);
     }

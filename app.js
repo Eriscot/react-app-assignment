@@ -42,6 +42,30 @@ ipcMain.on('get user', async (event, data) => {
     }
 });
 
+ipcMain.on('get magazines', async (event) => {
+    try {
+        await sql.connect(config)
+            .then(pool => {
+                return pool.request()
+                    .query('SELECT * FROM [Magazines] ')
+                    .then(result => {
+                        console.log(result);
+                        if(result.recordset.length) {
+                            mainWindow.webContents.send('return magazines', {
+                                table: result.recordset
+                            });
+                        } else {
+                            mainWindow.webContents.send('return magazines', {
+                                error: 'The table is empty'
+                            });
+                        }
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
 const menuTemplate = [
     {
         label: 'File',

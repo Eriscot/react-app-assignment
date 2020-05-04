@@ -3,12 +3,6 @@ import USER_ACTIONS from "../actions/userActionsConstants";
 
 const initialState = {
     user: null,
-    // new User({
-    //     name: 'Шаховский Александр Викторович',
-    //     zipcode: '246045',
-    //     room: 36,
-    //     address: 'ул. Свиридова',
-    // }),
     loading: false,
     error: null
 }
@@ -16,6 +10,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type){
         case USER_ACTIONS.LOGIN_START:
+        case USER_ACTIONS.GET_MAGAZINES_START:
             return {
                 ...state,
                 loading: true
@@ -41,13 +36,23 @@ export default function(state = initialState, action) {
                 loading: true,
                 user: null
             }
-        case USER_ACTIONS.LOGOUT_SUCCESS: {
-            console.log()
+        case USER_ACTIONS.LOGOUT_SUCCESS:
             return {
                 ...state,
                 loading: false
             }
-        }
+        case USER_ACTIONS.GET_MAGAZINES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                table: action.payload
+            }
+        case USER_ACTIONS.GET_MAGAZINES_FAILED:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
         default:
             return state;
     }

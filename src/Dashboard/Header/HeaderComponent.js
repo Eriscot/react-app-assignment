@@ -137,27 +137,6 @@ export default function (props) {
                 </Toolbar>
                 <Divider />
                 <DrawerList />
-            {/* <List
-                disablePadding={true}>
-                <ListItem button>
-                    <ListItemIcon>
-                        <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText></ListItemText>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText>Hi there</ListItemText>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText>Hi there</ListItemText>
-                </ListItem>
-            </List> */}
             </Drawer>
         </>
     );
