@@ -8,9 +8,11 @@ export default props => {
     console.log(props);
     return (
         <List>
-            {list.map(element => (
-                <NavLink to={element.link} className={props.location.pathname === element.link ? 'disabled-link' : ''}>
-                    <ListItem button key={element.title}>
+            {list.sort((a, b) => {
+                return a.title > b.title ? 1 : -1;
+            }).map(element => (
+                <NavLink key={element.title} to={element.link} className={props.location.pathname === element.link ? 'disabled-link' : ''}>
+                    <ListItem button>
                         <ListItemIcon>
                             {element.icon}
                         </ListItemIcon>

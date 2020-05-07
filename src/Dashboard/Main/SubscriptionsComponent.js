@@ -3,21 +3,27 @@ import Table from './Table';
 import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const MagazinesComponent = props => {
+const SubscriptionsComponent = props => {
     let header, rows;
+    console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'magazines') {
-                await props.getMagazines();
+            console.log('test');
+            if(!props.table || props.table.title !== 'subscriptions') {
+                await props.getSubscriptions();
             }
         })()
     });
     if(props.table) {
-        header = ['Название', 'Тип издания'];
+        console.log(props.table);
+        header = ['ФИО сотрудника', 'ФИО клиента', 'Название', 'Начало подписки', 'Конец подписки', 'Сумма'];
         rows = props.table.values.map(row => {
-            return Object.keys(row).map(key => ({value: row[key]}));
+            return Object.keys(row).map(key => ({
+                value: row[key]
+            }));
         });
     }
+    // rows={rows}
     return (
         <>
             <Table header={header} rows={rows}/>
@@ -33,4 +39,4 @@ const MagazinesComponent = props => {
     );
 }
 
-export default MagazinesComponent;
+export default SubscriptionsComponent;

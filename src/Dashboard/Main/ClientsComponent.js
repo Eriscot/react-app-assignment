@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react';
 import Table from './Table';
 import { Fab } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add';;
 
-const MagazinesComponent = props => {
+const ClientsComponent = props => {
     let header, rows;
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'magazines') {
-                await props.getMagazines();
+            if(!props.table || props.table.title !== 'clients') {
+                await props.getClients();
             }
         })()
     });
     if(props.table) {
-        header = ['Название', 'Тип издания'];
+        header = ['ФИО', 'Номер телефона', 'Квартира', 'Адрес'];
         rows = props.table.values.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }
+    // rows={rows}
     return (
         <>
             <Table header={header} rows={rows}/>
@@ -33,4 +34,4 @@ const MagazinesComponent = props => {
     );
 }
 
-export default MagazinesComponent;
+export default ClientsComponent;

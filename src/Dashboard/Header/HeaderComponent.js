@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import CloseIcon from '@material-ui/icons/Close';
 import DrawerList from './DrawerList';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     drawerHeader: {
@@ -97,7 +98,7 @@ export default function (props) {
                         ref={anchorRef}
                         onClick={handleToggle}
                         >
-                        <Avatar>T</Avatar>
+                        <Avatar>С</Avatar>
                     </IconButton>
                     <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                         {({ TransitionProps, placement }) => (
@@ -107,10 +108,9 @@ export default function (props) {
                             >
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={openMenu} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    <MenuItem onClick={handleClose}>Аккаунт</MenuItem>
-                                    <MenuItem onClick={handleLogout}>Выход</MenuItem>
-                                </MenuList>
+                                    <MenuList autoFocusItem={openMenu} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                        <MenuItem onClick={handleLogout}>Выход</MenuItem>
+                                    </MenuList>
                                 </ClickAwayListener>
                             </Paper>
                             </Grow>
@@ -118,26 +118,26 @@ export default function (props) {
                         </Popper>
                 </Toolbar>
             </AppBar>
-            <Drawer
-                anchor="left"
-                open={openDrawer}
-                classes={{
-                    paper: clsx(classes.drawerWidth)
-                }}
-            >
-                <Toolbar>
-                    <IconButton
-                        edge="end"
-                        color="inherit"
-                        onClick={handleDrawer}
-                        className={classes.menuButtonClose}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </Toolbar>
-                <Divider />
-                <DrawerList />
-            </Drawer>
+                <Drawer
+                    anchor="left"
+                    open={openDrawer}
+                    classes={{
+                        paper: clsx(classes.drawerWidth)
+                    }}
+                >
+                    <Toolbar>
+                        <IconButton
+                            edge="end"
+                            color="inherit"
+                            onClick={handleDrawer}
+                            className={classes.menuButtonClose}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                    <Divider />
+                    <DrawerList />
+                </Drawer>
         </>
     );
 }

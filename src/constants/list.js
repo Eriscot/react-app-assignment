@@ -6,7 +6,6 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import WorkIcon from '@material-ui/icons/Work';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ApartmentIcon from '@material-ui/icons/Apartment';
@@ -16,7 +15,12 @@ const list = [
     new listItem({
         title: 'Операции',
         icon: <MonetizationOnIcon />,
-        link: '/payments'
+        link: '/transactions'
+    }),
+    new listItem({
+        title: 'Типы посылок',
+        icon: <InboxIcon />,
+        link: '/ordertypes'
     }),
     new listItem({
         title: 'Посылки',
@@ -31,7 +35,7 @@ const list = [
     new listItem({
         title: 'Подписки',
         icon: <SubscriptionsIcon />,
-        link: '/subsription'
+        link: '/subscriptions'
     }),
     new listItem({
         title: 'Клиенты',
@@ -44,9 +48,14 @@ const list = [
         link: '/magazines'
     }),
     new listItem({
-        title: 'Тип операции',
-        icon: <LocalAtmIcon />,
-        link: '/paytypes'
+        title: 'Типы изданий',
+        icon: <MenuBookIcon />,
+        link: '/magazinetypes'
+    }),
+    new listItem({
+        title: 'Типы операции',
+        icon: <MonetizationOnIcon />,
+        link: '/transtypes'
     }),
     new listItem({
         title: 'Должности',

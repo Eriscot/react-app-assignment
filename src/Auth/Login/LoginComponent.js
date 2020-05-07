@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, TextField, Container, CssBaseline, Avatar, Typography, makeStyles} from '@material-ui/core/';
-import { Link as RouterLink} from 'react-router-dom';
 import AuthFormComponent from '../AuthFormComponent';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -39,14 +38,11 @@ const LoginComponent = (props) => {
             password
         })
     }
-
     return (
         <>
         <AuthFormComponent>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            {/* <Paper
-                className={classes.inside}> */}
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
@@ -64,7 +60,6 @@ const LoginComponent = (props) => {
                         name="nickname"
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
-                        autoComplete="email"
                         autoFocus
                     />
                     <TextField
@@ -78,13 +73,7 @@ const LoginComponent = (props) => {
                         label="Пароль"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
                     />
-                    <RouterLink 
-                            to="/register"
-                    >
-                        Регистрация
-                    </RouterLink>
                     <Button
                         type="submit"
                         fullWidth

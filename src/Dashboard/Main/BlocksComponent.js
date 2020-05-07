@@ -3,21 +3,26 @@ import Table from './Table';
 import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const MagazinesComponent = props => {
+const BlocksComponent = props => {
     let header, rows;
+    console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'magazines') {
-                await props.getMagazines();
+            if(!props.table || props.table.title !== 'blocks') {
+                await props.getBlocks();
             }
         })()
     });
     if(props.table) {
-        header = ['Название', 'Тип издания'];
+        console.log(props.table);
+        header = ['Адрес', 'Номер участка'];
         rows = props.table.values.map(row => {
-            return Object.keys(row).map(key => ({value: row[key]}));
+            return Object.keys(row).map(key => ({
+                value: row[key]
+            }));
         });
     }
+    // rows={rows}
     return (
         <>
             <Table header={header} rows={rows}/>
@@ -25,7 +30,8 @@ const MagazinesComponent = props => {
                 <Fab color="primary" style={{
                     margin: '20px auto',
                     textAlign: 'center'
-                }}>
+                }}
+                >
                     <AddIcon />
                 </Fab>
             </div>
@@ -33,4 +39,4 @@ const MagazinesComponent = props => {
     );
 }
 
-export default MagazinesComponent;
+export default BlocksComponent;
