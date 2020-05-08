@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 const mapStateToProps = (state, ownProps) => {
     return {
         ...ownProps,
-        table: state.table
+        positions: state.positions,
+        lastLoaded: state.lastLoaded
     }
 }
 

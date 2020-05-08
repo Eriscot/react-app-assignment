@@ -4,8 +4,10 @@ import OrderTypesComponent from "./OrderTypesComponent";
 import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
+    console.log(state.ordertypes, state.lastLoaded);
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        ordertypes: state.ordertypes
     }
 }
 

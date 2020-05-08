@@ -8,15 +8,15 @@ const DistrictsComponent = props => {
     console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'districts') {
+            if(!props.districts || props.lastLoaded !== 'districts') {
                 await props.getDistricts();
             }
         })()
     });
-    if(props.table) {
+    if(props.districts) {
         console.log(props.table);
-        header = ['ФИО Сотрудника', 'Номер участка'];
-        rows = props.table.values.map(row => {
+        header = ['ФИО Сотрудника'];
+        rows = props.districts.map(row => {
             return Object.keys(row).map(key => ({
                 value: row[key]
             }));
@@ -30,7 +30,8 @@ const DistrictsComponent = props => {
                 <Fab color="primary" style={{
                     margin: '20px auto',
                     textAlign: 'center'
-                }}>
+                }}
+                onClick={() => props.history.push(props.location.pathname + '/new')}>
                     <AddIcon />
                 </Fab>
             </div>

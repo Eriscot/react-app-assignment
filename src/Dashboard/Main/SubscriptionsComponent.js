@@ -9,15 +9,14 @@ const SubscriptionsComponent = props => {
     useEffect(() => {
         (async () => {
             console.log('test');
-            if(!props.table || props.table.title !== 'subscriptions') {
+            if(!props.subscriptions || props.lastLoaded !== 'subscriptions') {
                 await props.getSubscriptions();
             }
         })()
     });
-    if(props.table) {
-        console.log(props.table);
+    if(props.subscriptions) {
         header = ['ФИО сотрудника', 'ФИО клиента', 'Название', 'Начало подписки', 'Конец подписки', 'Сумма'];
-        rows = props.table.values.map(row => {
+        rows = props.subscriptions.map(row => {
             return Object.keys(row).map(key => ({
                 value: row[key]
             }));

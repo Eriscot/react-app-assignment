@@ -7,14 +7,14 @@ const MagazinesComponent = props => {
     let header, rows;
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'magazines') {
+            if(!props.magazines || props.lastLoaded !== 'magazines') {
                 await props.getMagazines();
             }
         })()
     });
-    if(props.table) {
+    if(props.magazines) {
         header = ['Название', 'Тип издания'];
-        rows = props.table.values.map(row => {
+        rows = props.magazines.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }
@@ -25,7 +25,9 @@ const MagazinesComponent = props => {
                 <Fab color="primary" style={{
                     margin: '20px auto',
                     textAlign: 'center'
-                }}>
+                }}
+                onClick={() => props.history.push(props.location.pathname + '/new')}
+                >
                     <AddIcon />
                 </Fab>
             </div>

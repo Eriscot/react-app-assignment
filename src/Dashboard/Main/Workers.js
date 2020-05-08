@@ -4,7 +4,8 @@ import WorkersComponent from "./WorkersComponent";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        workers: state.workers
     }
 }
 

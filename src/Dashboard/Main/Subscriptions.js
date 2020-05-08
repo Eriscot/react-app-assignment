@@ -4,7 +4,8 @@ import SubscriptionsComponent from "./SubscriptionsComponent";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        subscriptions: state.subscriptions
     }
 }
 

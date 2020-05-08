@@ -4,7 +4,8 @@ import TransactionsComponent from "./TransactionsComponent";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        transactions: state.transactions
     }
 }
 

@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 const TransTypeFormComponent = (props) => {
     const {id: paramId} = useParams();
     const [id] = useState(paramId);
-    const transTypeStart = props.table.values.find(element => {
+    const transTypeStart = props.transtypes.find(element => {
         return element.id === +id;
     });
     const [type, setType] = useState(transTypeStart ? transTypeStart.type : '');

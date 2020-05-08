@@ -8,15 +8,14 @@ const OrdersComponent = props => {
     console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'orders') {
+            if(!props.orders || props.lastLoaded !== 'orders') {
                 await props.getOrders();
             }
         })()
     });
-    if(props.table) {
-        console.log(props.table);
+    if(props.orders) {
         header = ['Тип посылки','Отправитель','ФИО клиента','Вес','Стоимость','Дата получения'];
-        rows = props.table.values.map(row => {
+        rows = props.orders.map(row => {
             return Object.keys(row).map(key => ({
                 value: row[key]
             }));

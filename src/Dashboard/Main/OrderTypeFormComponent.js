@@ -18,7 +18,7 @@ const OrderTypeFormComponent = (props) => {
     console.log(props);
     const {id: paramId} = useParams();
     const [id] = useState(paramId);
-    const orderTypeStart = props.table.values.find(element => {
+    const orderTypeStart = props.ordertypes.find(element => {
         return element.id === +id;
     });
     const [type, setType] = useState(orderTypeStart ? orderTypeStart.type : '');

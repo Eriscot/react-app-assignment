@@ -7,14 +7,14 @@ const MagazineTypesComponent = props => {
     let header, rows;
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'magazinetypes') {
+            if(!props.magazinetypes || props.lastLoaded !== 'magazinetypes') {
                 await props.getMagazineTypes();
             }
         })()
     });
-    if(props.table) {
+    if(props.magazinetypes) {
         header = ['Название'];
-        rows = props.table.values.map(row => {
+        rows = props.magazinetypes.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }

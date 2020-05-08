@@ -6,7 +6,8 @@ import OrderTypeFormComponent from "./OrderTypeFormComponent";
 const mapStateToProps = (state, ownProps) => {
     return {
         ...ownProps,
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        ordertypes: state.ordertypes
     }
 }
 

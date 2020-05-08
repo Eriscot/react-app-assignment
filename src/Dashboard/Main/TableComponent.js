@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 const TableComponent = props => {
     const classes = useStyles();
+    console.log(props);
 
     const deleteHandler = (id) => {
         switch(props.location.pathname){
@@ -37,11 +38,27 @@ const TableComponent = props => {
                     id
                 })
                 break;
+            case '/districts':
+                props.districtDelete({
+                    id
+                })
+                break;
+            case '/blocks':
+                props.blockDelete({
+                    id
+                })
+                break;
+            case '/magazines':
+                props.magazineDelete({
+                    id
+                })
+                break;
+
             default:
                 return;
         }
     }
-
+    console.log(props.header);
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -63,7 +80,7 @@ const TableComponent = props => {
                                 <TableRow key={row[0].value}>
                                     {
                                         row.map((cell, index) => {
-                                            return index ? <TableCell
+                                            return index && index <= props.header.length ? <TableCell
                                             key={cell.value}>{cell.value instanceof Date ? cell.value.toDateString() : (cell.value || '-')}</TableCell> : null;
                                         })
                                     }

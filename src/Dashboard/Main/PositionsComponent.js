@@ -8,14 +8,15 @@ const PositionsComponent = props => {
     console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'positions') {
+            console.log(props);
+            if(!props.positions || props.lastLoaded !== 'positions') {
                 await props.getPositions();
             }
         })()
     });
-    if(props.table) {
+    if(props.positions) {
         header = ['Должность'];
-        rows = props.table.values.map(row => {
+        rows = props.positions.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }

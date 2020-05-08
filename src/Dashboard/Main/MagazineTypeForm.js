@@ -6,7 +6,8 @@ import MagazineTypeFormComponent from "./MagazineTypeFormComponent";
 const mapStateToProps = (state, ownProps) => {
     return {
         ...ownProps,
-        table: state.table
+        magazinetypes: state.magazinetypes,
+        lastLoaded: state.lastLoaded
     }
 }
 

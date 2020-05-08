@@ -8,15 +8,15 @@ const WorkersComponent = props => {
     console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'workers') {
+            if(!props.workers || props.lastLoaded !== 'workers') {
                 await props.getWorkers();
             }
         })()
     });
-    if(props.table) {
+    if(props.workers) {
         console.log(props.table);
         header = ['ФИО', 'Должность', 'Номер телефона'];
-        rows = props.table.values.map(row => {
+        rows = props.workers.map(row => {
             return Object.keys(row).map(key => ({
                 value: row[key]
             }));

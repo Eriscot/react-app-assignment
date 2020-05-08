@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TableComponent from './TableComponent';
 import { withRouter } from 'react-router-dom';
-import { positionDelete, magazineTypeDelete, orderTypeDelete, transTypeDelete } from '../../redux/actions/userActionCreators';
+import { positionDelete, magazineTypeDelete, orderTypeDelete, transTypeDelete, districtDelete, blockDelete, magazineDelete } from '../../redux/actions/userActionCreators';
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -15,7 +15,10 @@ const mapDispatchToProps = dispatch => {
         positionDelete: (payload) => dispatch(positionDelete(payload)),
         magazineTypeDelete: (payload) => dispatch(magazineTypeDelete(payload)),
         orderTypeDelete: (payload) => dispatch(orderTypeDelete(payload)),
-        transTypeDelete: (payload) => dispatch(transTypeDelete(payload))
+        transTypeDelete: (payload) => dispatch(transTypeDelete(payload)),
+        districtDelete: (payload) => dispatch(districtDelete(payload)),
+        blockDelete: (payload) => dispatch(blockDelete(payload)),
+        magazineDelete: (payload) => dispatch(magazineDelete(payload))
     }
 }
 

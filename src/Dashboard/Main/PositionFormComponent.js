@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 const PositionFormComponent = (props) => {
     const {id: paramId} = useParams();
     const [id] = useState(paramId);
-    const positionStart = props.table.values.find(element => {
+    const positionStart = props.positions.find(element => {
         return element.id === +id;
     });
     const [position, setPosition] = useState(positionStart ? positionStart.position : '');

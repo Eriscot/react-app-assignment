@@ -7,14 +7,14 @@ const TransTypesComponent = props => {
     let header, rows;
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'transtypes') {
+            if(!props.transtypes || props.lastLoaded !== 'transtypes') {
                 await props.getTransTypes();
             }
         })()
     });
-    if(props.table) {
+    if(props.transtypes) {
         header = ['Тип', 'Комиссия'];
-        rows = props.table.values.map(row => {
+        rows = props.transtypes.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }

@@ -3,9 +3,11 @@ import { getMagazineTypes } from "../../redux/actions/userActionCreators";
 import MagazineTypesComponent from "./MagazineTypesComponent";
 import { withRouter } from "react-router-dom";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        table: state.table
+        ...ownProps,
+        lastLoaded: state.lastLoaded,
+        magazinetypes: state.magazinetypes
     }
 }
 

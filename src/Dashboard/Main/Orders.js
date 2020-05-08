@@ -4,7 +4,8 @@ import OrdersComponent from "./OrdersComponent";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        orders: state.orders
     }
 }
 

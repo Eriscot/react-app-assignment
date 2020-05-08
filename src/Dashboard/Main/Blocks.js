@@ -4,9 +4,11 @@ import BlocksComponent from "./BlocksComponent";
 import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state.blocks, state.lastLoaded);
     return {
         ...ownProps,
-        table: state.table
+        blocks: state.blocks,
+        lastLoaded: state.lastLoaded
     }
 }
 

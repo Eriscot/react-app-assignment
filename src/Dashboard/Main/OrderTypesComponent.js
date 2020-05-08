@@ -8,14 +8,14 @@ const OrderTypesComponent = props => {
     console.log(props);
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'ordertypes') {
+            if(!props.ordertypes || props.lastLoaded !== 'ordertypes') {
                 await props.getOrderTypes();
             }
         })()
     });
-    if(props.table) {
+    if(props.ordertypes) {
         header = ['Название'];
-        rows = props.table.values.map(row => {
+        rows = props.ordertypes.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }

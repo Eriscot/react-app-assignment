@@ -5,7 +5,8 @@ import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        transtypes: state.transtypes
     }
 }
 

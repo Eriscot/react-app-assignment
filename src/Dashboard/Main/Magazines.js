@@ -1,10 +1,12 @@
 import { connect } from "react-redux";
 import MagazinesComponent from "./MagazinesComponent";
 import { getMagazines } from "../../redux/actions/userActionCreators";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        magazines: state.magazines,
+        lastLoaded: state.lastLoaded
     }
 }
 
@@ -14,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MagazinesComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MagazinesComponent));

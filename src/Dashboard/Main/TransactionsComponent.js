@@ -7,14 +7,14 @@ const TransactionsComponent = props => {
     let header, rows;
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'transactions') {
+            if(!props.transactions || props.lastLoaded !== 'transactions') {
                 await props.getTransactions();
             }
         })()
     });
-    if(props.table) {
+    if(props.transactions) {
         header = ['Тип операции', 'ФИО сотрудника', 'ФИО Клиента', 'Сумма', 'Дата проведения'];
-        rows = props.table.values.map(row => {
+        rows = props.transactions.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }

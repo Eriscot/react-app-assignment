@@ -48,24 +48,98 @@ export default function(state = initialState, action) {
                 loading: true,
                 user: undefined
             }
-        case USER_ACTIONS.LOGOUT_SUCCESS:
-        case USER_ACTIONS.GET_MAGAZINES_SUCCESS:
         case USER_ACTIONS.GET_POSITIONS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                positions: action.payload.positions
+            }
+        
+        case USER_ACTIONS.GET_MAGAZINES_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                magazines: action.payload.magazines
+            }
         case USER_ACTIONS.GET_TRANSTYPES_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                transtypes: action.payload.transtypes
+            }
         case USER_ACTIONS.GET_ORDERTYPES_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                ordertypes: action.payload.ordertypes
+            }
         case USER_ACTIONS.GET_MAGAZINETYPES_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                magazinetypes: action.payload.magazinetypes
+            }
         case USER_ACTIONS.GET_DISTRICTS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                districts: action.payload.districts
+            }
         case USER_ACTIONS.GET_BLOCKS_SUCCESS:
+            console.log(action.payload.blocks);
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                blocks: action.payload.blocks
+            }
         case USER_ACTIONS.GET_CLIENTS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                clients: action.payload.clients
+            }
         case USER_ACTIONS.GET_TRANSACTIONS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                transactions: action.payload.transactions
+            }
         case USER_ACTIONS.GET_PENSIONS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                pensions: action.payload.pensions
+            }
         case USER_ACTIONS.GET_SUBSCRIPTIONS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                subscriptions: action.payload.subscriptions
+            }
         case USER_ACTIONS.GET_ORDERS_SUCCESS:
+            return {
+                ...state,
+                lastLoaded: action.payload.lastLoaded,
+                loading: false,
+                orders: action.payload.orders
+            }
         case USER_ACTIONS.GET_WORKERS_SUCCESS:
             return {
                 ...state,
+                lastLoaded: action.payload.lastLoaded,
                 loading: false,
-                table: action.payload
+                workers: action.payload.workers
             }
         case USER_ACTIONS.GET_MAGAZINES_FAILED:
         case USER_ACTIONS.GET_POSITIONS_FAILED:
@@ -91,6 +165,10 @@ export default function(state = initialState, action) {
                 error: undefined
             }
         }
+        case USER_ACTIONS.LOGOUT_SUCCESS:
+            return {
+
+            }
         default:
             return state;
     }

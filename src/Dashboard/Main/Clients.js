@@ -4,7 +4,8 @@ import ClientsComponent from "./ClientsComponent";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        clients: state.clients,
+        lastLoaded: state.lastLoaded
     }
 }
 

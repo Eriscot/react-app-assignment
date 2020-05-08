@@ -7,14 +7,14 @@ const ClientsComponent = props => {
     let header, rows;
     useEffect(() => {
         (async () => {
-            if(!props.table || props.table.title !== 'clients') {
+            if(!props.clients || props.lastLoaded !== 'clients') {
                 await props.getClients();
             }
         })()
     });
-    if(props.table) {
+    if(props.clients) {
         header = ['ФИО', 'Номер телефона', 'Квартира', 'Адрес'];
-        rows = props.table.values.map(row => {
+        rows = props.clients.map(row => {
             return Object.keys(row).map(key => ({value: row[key]}));
         });
     }

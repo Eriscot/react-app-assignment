@@ -4,9 +4,11 @@ import { getPositions } from "../../redux/actions/userActionCreators";
 import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state.lastLoaded);
     return {
         ...ownProps,
-        table: state.table
+        positions: state.positions,
+        lastLoaded: state.lastLoaded
     }
 }
 

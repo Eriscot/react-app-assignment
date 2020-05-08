@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 const MagazineTypeFormComponent = (props) => {
     const {id: paramId} = useParams();
     const [id] = useState(paramId);
-    const magazineTypeStart = props.table.values.find(element => {
+    const magazineTypeStart = props.magazinetypes.find(element => {
         return element.id === +id;
     });
     const [type, setType] = useState(magazineTypeStart ? magazineTypeStart.type : '');

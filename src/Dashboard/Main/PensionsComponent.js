@@ -9,15 +9,14 @@ const PensionsComponent = props => {
     useEffect(() => {
         (async () => {
             console.log('in pensions');
-            if(!props.table || props.table.title !== 'pensions') {
+            if(!props.pensions || props.lastLoaded !== 'pensions') {
                 await props.getPensions();
             }
         })()
     });
-    if(props.table) {
-        console.log(props.table);
+    if(props.pensions) {
         header = ['ФИО клиента', 'ФИО сотрудника', 'Сумма', 'Дата получения'];
-        rows = props.table.values.map(row => {
+        rows = props.pensions.map(row => {
             return Object.keys(row).map(key => ({
                 value: row[key]
             }));

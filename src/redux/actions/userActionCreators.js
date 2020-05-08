@@ -74,8 +74,8 @@ export function getMagazines() {
             } else {
                 await setTimeout(() => {
                     dispatch(getMagazinesSuccess({
-                        title: 'magazines',
-                        values: data.table
+                        lastLoaded: 'magazines',
+                        magazines: data.magazines
                     }));
                 }, 100)
             }
@@ -115,8 +115,8 @@ export function getPositions() {
             } else {
                 await setTimeout(() => {
                     dispatch(getPositionsSuccess({
-                        title: 'positions',
-                        values: data.table
+                        lastLoaded: 'positions',
+                        positions: data.positions
                     }));
                 }, 100);
             }
@@ -156,8 +156,8 @@ export function getTransTypes() {
             } else {
                 await setTimeout(() => {
                     dispatch(getTransTypesSuccess({
-                        title: 'transtypes',
-                        values: data.table
+                        lastLoaded: 'transtypes',
+                        transtypes: data.transtypes
                     }));
                 }, 100);
             }
@@ -197,8 +197,8 @@ export function getMagazineTypes() {
             } else {
                 await setTimeout(() => {
                     dispatch(getMagazineTypesSuccess({
-                        title: 'magazinetypes',
-                        values: data.table
+                        lastLoaded: 'magazinetypes',
+                        magazinetypes: data.magazinetypes
                     }));
                 }, 100);
             }
@@ -228,18 +228,18 @@ export function getMagazineTypesSuccess(payload) {
 
 export function getOrderTypes() {
     return async dispatch => {
-        dispatch(getMagazineTypesStart());
+        dispatch(getOrderTypesStart());
         ipcRenderer.send('get ordertypes');
         ipcRenderer.on('return ordertypes', async (event, data) => {
             if(data.error) {
                 await setTimeout(() => {
-                    dispatch(getMagazineTypesFailed(data.error));
+                    dispatch(getOrderTypesFailed(data.error));
                 }, 100);
             } else {
                 await setTimeout(() => {
-                    dispatch(getMagazineTypesSuccess({
-                        title: 'ordertypes',
-                        values: data.table
+                    dispatch(getOrderTypesSuccess({
+                        lastLoaded: 'ordertypes',
+                        ordertypes: data.ordertypes
                     }));
                 }, 100);
             }
@@ -281,8 +281,8 @@ export function getDistricts() {
             } else {
                 await setTimeout(() => {
                     dispatch(getDistrictsSuccess({
-                        title: 'districts',
-                        values: data.table
+                        lastLoaded: 'districts',
+                        districts: data.districts
                     }));
                 }, 100);
             }
@@ -325,8 +325,8 @@ export function getBlocks() {
             } else {
                 await setTimeout(() => {
                     dispatch(getBlocksSuccess({
-                        title: 'blocks',
-                        values: data.table
+                        lastLoaded: 'blocks',
+                        blocks: data.blocks
                     }));
                 }, 100);
             }
@@ -336,20 +336,20 @@ export function getBlocks() {
 
 export function getBlocksStart() {
     return {
-        type: USER_ACTIONS.GET_DISTRICTS_START,
+        type: USER_ACTIONS.GET_BLOCKS_START,
     }
 }
 
 export function getBlocksFailed(payload) {
     return {
-        type: USER_ACTIONS.GET_DISTRICTS_FAILED,
+        type: USER_ACTIONS.GET_BLOCKS_FAILED,
         payload
     }
 }
 
 export function getBlocksSuccess(payload) {
     return {
-        type: USER_ACTIONS.GET_DISTRICTS_SUCCESS,
+        type: USER_ACTIONS.GET_BLOCKS_SUCCESS,
         payload
     }
 }
@@ -366,8 +366,8 @@ export function getClients() {
             } else {
                 await setTimeout(() => {
                     dispatch(getClientsSuccess({
-                        title: 'clients',
-                        values: data.table
+                        lastLoaded: 'clients',
+                        clients: data.clients
                     }));
                 }, 100);
             }
@@ -407,8 +407,8 @@ export function getTransactions() {
             } else {
                 await setTimeout(() => {
                     dispatch(getTransactionsSuccess({
-                        title: 'transactions',
-                        values: data.table
+                        lastLoaded: 'transactions',
+                        transactions: data.transactions
                     }));
                 }, 100);
             }
@@ -448,8 +448,8 @@ export function getPensions() {
             } else {
                 await setTimeout(() => {
                     dispatch(getPensionsSuccess({
-                        title: 'pensions',
-                        values: data.table
+                        lastLoaded: 'pensions',
+                        pensions: data.pensions
                     }));
                 }, 100);
             }
@@ -489,8 +489,8 @@ export function getSubscriptions() {
             } else {
                 await setTimeout(() => {
                     dispatch(getSubscriptionsSuccess({
-                        title: 'subscriptions',
-                        values: data.table
+                        lastLoaded: 'subscriptions',
+                        subscriptions: data.subscriptions
                     }));
                 }, 100);
             }
@@ -530,8 +530,8 @@ export function getOrders() {
             } else {
                 await setTimeout(() => {
                     dispatch(getOrdersSuccess({
-                        title: 'orders',
-                        values: data.table
+                        lastLoaded: 'orders',
+                        orders: data.orders
                     }));
                 }, 100);
             }
@@ -571,8 +571,8 @@ export function getWorkers() {
             } else {
                 await setTimeout(() => {
                     dispatch(getWorkersSuccess({
-                        title: 'workers',
-                        values: data.table
+                        lastLoaded: 'workers',
+                        workers: data.workers
                     }));
                 }, 100);
             }
@@ -716,6 +716,100 @@ export function transTypeDelete(payload) {
         });
         setTimeout(() => {
             dispatch(getTransTypes());
+        }, 50)
+        
+    }
+}
+
+export function districtSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new district', {
+                workerId: payload.workerId
+            });
+        } else {
+            ipcRenderer.send('update district', {
+                id: payload.id,
+                workerId: payload.workerId
+            });
+        }
+        setTimeout(() => {
+            dispatch(getDistricts())
+        }, 50);
+    }
+}
+
+export function districtDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete district', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getDistricts());
+        }, 50)
+        
+    }
+}
+
+export function blockSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new block', {
+                address: payload.address,
+                distId: payload.distId
+            });
+        } else {
+            ipcRenderer.send('update block', {
+                id: payload.id,
+                address: payload.address,
+                distId: payload.distId
+            });
+        }
+        setTimeout(() => {
+            dispatch(getBlocks())
+        }, 50);
+    }
+}
+
+export function blockDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete block', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getBlocks());
+        }, 50)
+        
+    }
+}
+
+export function magazineSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new magazine', {
+                name: payload.name,
+                typeId: payload.typeId
+            });
+        } else {
+            ipcRenderer.send('update magazine', {
+                id: payload.id,
+                name: payload.name,
+                typeId: payload.typeId
+            });
+        }
+        setTimeout(() => {
+            dispatch(getMagazines())
+        }, 50);
+    }
+}
+
+export function magazineDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete magazine', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getMagazines());
         }, 50)
         
     }

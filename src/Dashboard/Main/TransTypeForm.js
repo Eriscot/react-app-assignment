@@ -6,7 +6,8 @@ import TransTypeFormComponent from "./TransTypeFormComponent";
 const mapStateToProps = (state, ownProps) => {
     return {
         ...ownProps,
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        transtypes: state.transtypes
     }
 }
 

@@ -4,7 +4,8 @@ import PensionsComponent from "./PensionsComponent";
 
 const mapStateToProps = state => {
     return {
-        table: state.table
+        lastLoaded: state.lastLoaded,
+        pensions: state.pensions
     }
 }
 

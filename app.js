@@ -64,11 +64,11 @@ ipcMain.on('get magazines', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query('SELECT Magazine.id, name, type FROM Magazine INNER JOIN MagazineType ON MagazineType.id = typeId')
+                    .query('SELECT Magazine.id, name, type, typeId FROM Magazine INNER JOIN MagazineType ON MagazineType.id = typeId')
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return magazines', {
-                                table: result.recordset
+                                magazines: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return magazines', {
@@ -92,7 +92,7 @@ ipcMain.on('get positions', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return positions', {
-                                table: result.recordset
+                                positions: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return positions', {
@@ -116,7 +116,7 @@ ipcMain.on('get transtypes', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return transtypes', {
-                                table: result.recordset
+                                transtypes: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return transtypes', {
@@ -137,9 +137,10 @@ ipcMain.on('get ordertypes', async (event) => {
                 return pool.request()
                     .query('SELECT * FROM OrderType')
                     .then(result => {
+                        console.log(result);
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return ordertypes', {
-                                table: result.recordset
+                                ordertypes: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return ordertypes', {
@@ -162,7 +163,7 @@ ipcMain.on('get magazinetypes', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return magazinetypes', {
-                                table: result.recordset
+                                magazinetypes: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return magazinetypes', {
@@ -181,11 +182,11 @@ ipcMain.on('get districts', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query('SELECT District.id, name, districtNumber FROM District INNER JOIN Worker ON Worker.id = workerId')
+                    .query('SELECT District.id, name, workerId FROM District LEFT JOIN Worker ON Worker.id = workerId')
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return districts', {
-                                table: result.recordset
+                                districts: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return districts', {
@@ -204,12 +205,12 @@ ipcMain.on('get blocks', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query('SELECT Block.id, address, districtNumber FROM Block INNER JOIN District ON District.id = distId')
+                    .query('SELECT Block.id, address, distId FROM Block INNER JOIN District ON District.id = distId')
                     .then(result => {
                         console.log(result);
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return blocks', {
-                                table: result.recordset
+                                blocks: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return blocks', {
@@ -233,7 +234,7 @@ ipcMain.on('get clients', async (event) => {
                         console.log(result);
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return clients', {
-                                table: result.recordset
+                                clients: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return clients', {
@@ -259,7 +260,7 @@ ipcMain.on('get transactions', async (event) => {
                         console.log(result);
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return transactions', {
-                                table: result.recordset
+                                transactions: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return transactions', {
@@ -284,7 +285,7 @@ ipcMain.on('get pensions', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return pensions', {
-                                table: result.recordset
+                                pensions: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return pensions', {
@@ -309,7 +310,7 @@ ipcMain.on('get orders', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return orders', {
-                                table: result.recordset
+                                orders: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return orders', {
@@ -336,7 +337,7 @@ ipcMain.on('get subscriptions', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return subscriptions', {
-                                table: result.recordset
+                                subscriptions: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return subscriptions', {
@@ -360,7 +361,7 @@ ipcMain.on('get workers', async (event) => {
                     .then(result => {
                         if(result.recordset.length) {
                             mainWindow.webContents.send('return workers', {
-                                table: result.recordset
+                                workers: result.recordset
                             });
                         } else {
                             mainWindow.webContents.send('return workers', {
@@ -574,6 +575,163 @@ ipcMain.on('update transtype', async (event, data) => {
                     .input('type', sql.NVarChar, data.type)
                     .input('cost', sql.Money, data.cost)
                     .query(`UPDATE TransType SET type = @type, cost = @cost WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new district', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('workerId', sql.Int, data.workerId)
+                    .query(`INSERT INTO District VALUES(@workerId)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete district', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM District WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update district', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('workerId', sql.Int, data.workerId)
+                    .query(`UPDATE District SET workerId = @workerId WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new block', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('address', sql.NVarChar, data.address)
+                    .input('distId', sql.Int, data.distId)
+                    .query(`INSERT INTO Block VALUES(@address, @distId)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete block', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM Block WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update block', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('address', sql.NVarChar, data.address)
+                    .input('distId', sql.Int, data.distId)
+                    .query(`UPDATE Block SET address = @address, distId = @distId WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new magazine', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('name', sql.NVarChar, data.name)
+                    .input('typeId', sql.Int, data.typeId)
+                    .query(`INSERT INTO Magazine VALUES(@name, @typeId)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete magazine', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM Magazine WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update magazine', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('name', sql.NVarChar, data.name)
+                    .input('typeId', sql.Int, data.typeId)
+                    .query(`UPDATE Magazine SET name = @name, typeId = @typeId WHERE id = @id`)
                     .then(result => {
                         console.log(result);
                     });

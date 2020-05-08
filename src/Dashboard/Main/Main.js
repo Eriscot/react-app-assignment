@@ -18,6 +18,9 @@ import PositionForm from './PositionForm';
 import MagazineTypeForm from './MagazineTypeForm';
 import OrderTypeForm from './OrderTypeForm';
 import TransTypeForm from './TransTypeForm';
+import BlocksForm from './BlocksForm';
+import DistrictsForm from './DistrictsForm';
+import MagazineForm from './MagazineForm';
 
 const useStyles = makeStyles(theme => (
     {
@@ -34,6 +37,12 @@ export default function() {
         <main>
             <Container maxWidth="xl" className={classes.main}>
                 <Switch>
+                    <Route path="/magazines/new">
+                        <MagazineForm />
+                    </Route>
+                    <Route path="/magazines/:id">
+                        <MagazineForm />
+                    </Route>
                     <Route path="/magazines">
                         <Magazines />
                     </Route>
@@ -73,8 +82,20 @@ export default function() {
                     <Route path="/magazinetypes">
                         <MagazineTypes />
                     </Route>
+                    <Route path="/districts/new">
+                        <DistrictsForm />
+                    </Route>
+                    <Route path="/districts/:id">
+                        <DistrictsForm />
+                    </Route>
                     <Route path="/districts">
                         <Districts />
+                    </Route>
+                    <Route path="/blocks/new">
+                        <BlocksForm />
+                    </Route>
+                    <Route path="/blocks/:id">
+                        <BlocksForm />
                     </Route>
                     <Route path="/blocks">
                         <Blocks />
