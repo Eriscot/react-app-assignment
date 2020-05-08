@@ -81,6 +81,7 @@ const LoginComponent = (props) => {
                         color="primary"
                         className={classes.submit}
                         onClick={handleSubmit}
+                        disabled={!nickname || !password}
                     >
                         Вход
                     </Button>

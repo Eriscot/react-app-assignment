@@ -29,7 +29,8 @@ const PensionsComponent = props => {
                 <Fab color="primary" style={{
                     margin: '20px auto',
                     textAlign: 'center'
-                }}>
+                }}
+                onClick={() => props.history.push(props.location.pathname + '/new')}>
                     <AddIcon />
                 </Fab>
             </div>

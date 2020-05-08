@@ -46,6 +46,7 @@ const BlockFormComponent = (props) => {
         <div className={classes.center}>
             <FormControl variant="outlined" className={classes.formControl}>
                 <TextField 
+                    required
                     name="address"
                     id="address"
                     value={address}
@@ -60,6 +61,7 @@ const BlockFormComponent = (props) => {
             <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="district-select">Номер участка</InputLabel>
                 <Select
+                required
                 labelId="district-select"
                 id="distId"
                 value={distId}

@@ -814,3 +814,108 @@ export function magazineDelete(payload) {
         
     }
 }
+
+export function workerSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new worker', {
+                name: payload.name,
+                positionId: payload.positionId,
+                phoneNumber: payload.phoneNumber
+            });
+        } else {
+            ipcRenderer.send('update worker', {
+                id: payload.id,
+                name: payload.name,
+                positionId: payload.positionId,
+                phoneNumber: payload.phoneNumber
+            });
+        }
+        setTimeout(() => {
+            dispatch(getWorkers())
+        }, 50);
+    }
+}
+
+export function workerDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete worker', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getWorkers());
+        }, 50)
+        
+    }
+}
+
+export function clientSubmit(payload) {
+    return async dispatch => {
+        console.log(payload);
+        if(payload.new) {
+            ipcRenderer.send('submit new client', {
+                name: payload.name,
+                phoneNumber: payload.phoneNumber,
+                room: payload.room,
+                blockId: payload.blockId
+            });
+        } else {
+            ipcRenderer.send('update client', {
+                id: payload.id,
+                name: payload.name,
+                phoneNumber: payload.phoneNumber,
+                room: payload.room,
+                blockId: payload.blockId
+            });
+        }
+        setTimeout(() => {
+            dispatch(getClients())
+        }, 50);
+    }
+}
+
+export function clientDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete client', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getClients());
+        }, 50)
+    }
+}
+
+export function pensionSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new pension', {
+                clientId: payload.clientId,
+                workerId: payload.workerId,
+                total: payload.total,
+                date: payload.date
+            });
+        } else {
+            ipcRenderer.send('update pension', {
+                id: payload.id,
+                clientId: payload.clientId,
+                workerId: payload.workerId,
+                total: payload.total,
+                date: payload.date
+            });
+        }
+        setTimeout(() => {
+            dispatch(getPensions())
+        }, 50);
+    }
+}
+
+export function pensionDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete pension', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getPensions());
+        }, 50)
+    }
+}

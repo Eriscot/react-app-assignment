@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getWorkers } from "../../redux/actions/userActionCreators";
 import WorkersComponent from "./WorkersComponent";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
@@ -15,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkersComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkersComponent));

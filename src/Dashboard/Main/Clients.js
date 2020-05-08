@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getClients } from "../../redux/actions/userActionCreators";
 import ClientsComponent from "./ClientsComponent";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
@@ -15,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClientsComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ClientsComponent));

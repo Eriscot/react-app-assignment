@@ -37,6 +37,7 @@ const MagazineTypeFormComponent = (props) => {
         <div className={classes.center}>
                 <FormControl variant="outlined" className={classes.formControl}>
                     <TextField 
+                    required
                     variant="outlined"
                     margin="normal"
                     fullWidth

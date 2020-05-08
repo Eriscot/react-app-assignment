@@ -229,7 +229,7 @@ ipcMain.on('get clients', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query('SELECT Client.id, name, phoneNumber, room, address FROM Client INNER JOIN Block ON Block.id = blockId')
+                    .query('SELECT Client.id, name, phoneNumber, room, address, blockId FROM Client LEFT JOIN Block ON Block.id = blockId')
                     .then(result => {
                         console.log(result);
                         if(result.recordset.length) {
@@ -356,7 +356,7 @@ ipcMain.on('get workers', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query(`SELECT Worker.id, name, position, phoneNumber
+                    .query(`SELECT Worker.id, name, position, phoneNumber, positionId
                     FROM Worker INNER JOIN Position ON Position.id = positionId`)
                     .then(result => {
                         if(result.recordset.length) {
@@ -732,6 +732,176 @@ ipcMain.on('update magazine', async (event, data) => {
                     .input('name', sql.NVarChar, data.name)
                     .input('typeId', sql.Int, data.typeId)
                     .query(`UPDATE Magazine SET name = @name, typeId = @typeId WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new worker', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('name', sql.NVarChar, data.name)
+                    .input('positionId', sql.Int, data.positionId)
+                    .input('phone', sql.NVarChar, data.phoneNumber)
+                    .query(`INSERT INTO Worker VALUES(@name, @positionId, @phoneNumber)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete worker', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM Worker WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update worker', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('name', sql.NVarChar, data.name)
+                    .input('positionId', sql.Int, data.positionId)
+                    .input('phoneNumber', sql.NVarChar, data.phoneNumber)
+                    .query(`UPDATE Worker SET name = @name, positionId = @positionId, phoneNumber = @phoneNumber WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new client', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                console.log('error here')
+                return pool.request()
+                    .input('name', sql.NVarChar, data.name)
+                    .input('phoneNumber', sql.NVarChar, data.phoneNumber)
+                    .input('room', sql.Int, data.room)
+                    .input('blockId', sql.Int, data.blockId)
+                    .query(`INSERT INTO Client VALUES(@name, @phoneNumber, @room, @blockId)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete client', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM Client WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update client', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('name', sql.NVarChar, data.name)
+                    .input('phoneNumber', sql.NVarChar, data.phoneNumber)
+                    .input('room', sql.Int, data.room)
+                    .input('blockId', sql.Int, data.blockId)
+                    .query(`UPDATE Client SET name = @name, phoneNumber = @phoneNumber, room = @room, blockId = @blockId WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new pension', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('workerId', sql.NVarChar, data.workerId)
+                    .input('total', sql.Int, data.total)
+                    .input('date', sql.DateTime, data.date)
+                    .query(`INSERT INTO Pension VALUES(@clientId, @workerId, @total, @date)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete pension', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM Client WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update pension', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('workerId', sql.NVarChar, data.workerId)
+                    .input('total', sql.Int, data.total)
+                    .input('date', sql.DateTime, data.date)
+                    .query(`UPDATE Client SET clientId = @clientid, workerId = @workerId, total = @total, date = @date WHERE id = @id`)
                     .then(result => {
                         console.log(result);
                     });

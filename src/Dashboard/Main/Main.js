@@ -21,6 +21,9 @@ import TransTypeForm from './TransTypeForm';
 import BlocksForm from './BlocksForm';
 import DistrictsForm from './DistrictsForm';
 import MagazineForm from './MagazineForm';
+import WorkersForm from './WorkersForm';
+import ClientsForm from './ClientsForm';
+import PensionsForm from './PensionsForm';
 
 const useStyles = makeStyles(theme => (
     {
@@ -100,11 +103,23 @@ export default function() {
                     <Route path="/blocks">
                         <Blocks />
                     </Route>
+                    <Route path="/clients/new">
+                        <ClientsForm />
+                    </Route>
+                    <Route path="/clients/:id">
+                        <ClientsForm />
+                    </Route>
                     <Route path="/clients">
                         <Clients />
                     </Route>
                     <Route path="/transactions">
                         <Transactions />
+                    </Route>
+                    <Route path="/pensions/new">
+                        <PensionsForm />
+                    </Route>
+                    <Route path="/pensions/:id">
+                        <PensionsForm />
                     </Route>
                     <Route path="/pensions">
                         <Pensions />
@@ -114,6 +129,12 @@ export default function() {
                     </Route>
                     <Route path="/orders">
                         <Orders />
+                    </Route>
+                    <Route path="/workers/new">
+                        <WorkersForm />
+                    </Route>
+                    <Route path="/workers/:id">
+                        <WorkersForm />
                     </Route>
                     <Route path="/workers">
                         <Workers />

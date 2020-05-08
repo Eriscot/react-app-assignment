@@ -53,7 +53,16 @@ const TableComponent = props => {
                     id
                 })
                 break;
-
+            case '/workers':
+                props.workerDelete({
+                    id
+                })
+                break;
+            case '/clients':
+                props.clientDelete({
+                    id
+                })
+                break;
             default:
                 return;
         }
@@ -76,12 +85,13 @@ const TableComponent = props => {
                 <TableBody>
                     {   props.rows ? 
                         props.rows.map(row => {
+                            console.log(row);
                             return (
                                 <TableRow key={row[0].value}>
                                     {
                                         row.map((cell, index) => {
                                             return index && index <= props.header.length ? <TableCell
-                                            key={cell.value}>{cell.value instanceof Date ? cell.value.toDateString() : (cell.value || '-')}</TableCell> : null;
+                                            key={cell.value + Math.random() * 15}>{cell.value instanceof Date ? cell.value.toDateString() : (cell.value || '-')}</TableCell> : null;
                                         })
                                     }
                                     <TableCell

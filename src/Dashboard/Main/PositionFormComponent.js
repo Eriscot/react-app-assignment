@@ -41,6 +41,7 @@ const PositionFormComponent = (props) => {
                     variant="outlined"
                     margin="normal"
                     fullWidth
+                    required
                     id="position"
                     name="position"
                     value={position}

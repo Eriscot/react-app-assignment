@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getPensions } from "../../redux/actions/userActionCreators";
 import PensionsComponent from "./PensionsComponent";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
@@ -15,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PensionsComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PensionsComponent));
