@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getTransactions } from "../../redux/actions/userActionCreators";
 import TransactionsComponent from "./TransactionsComponent";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
@@ -15,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TransactionsComponent));

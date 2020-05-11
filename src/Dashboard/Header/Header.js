@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import HeaderComponent from "./HeaderComponent";
 import { userLogout } from "../../redux/actions/userActionCreators";
+import { withRouter } from "react-router-dom";
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -8,7 +9,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(
+export default withRouter(connect(
     null,
     mapDispatchToProps
-)(HeaderComponent);
+)(HeaderComponent));

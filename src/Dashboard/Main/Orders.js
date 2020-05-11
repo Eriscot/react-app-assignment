@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getOrders } from "../../redux/actions/userActionCreators";
 import OrdersComponent from "./OrdersComponent";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
@@ -15,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrdersComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrdersComponent));

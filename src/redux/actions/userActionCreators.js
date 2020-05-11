@@ -565,11 +565,11 @@ export function getWorkers() {
         ipcRenderer.send('get workers');
         ipcRenderer.on('return workers', async (event, data) => {
             if(data.error) {
-                await setTimeout(() => {
+                setTimeout(() => {
                     dispatch(getWorkersFailed(data.error));
                 }, 100);
             } else {
-                await setTimeout(() => {
+                setTimeout(() => {
                     dispatch(getWorkersSuccess({
                         lastLoaded: 'workers',
                         workers: data.workers
@@ -916,6 +916,121 @@ export function pensionDelete(payload) {
         });
         setTimeout(() => {
             dispatch(getPensions());
+        }, 50)
+    }
+}
+
+export function transactionSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new transaction', {
+                typeId: payload.typeId,
+                clientId: payload.clientId,
+                workerId: payload.workerId,
+                total: payload.total,
+                tranDate: payload.tranDate
+            });
+        } else {
+            ipcRenderer.send('update transaction', {
+                id: payload.id,
+                typeId: payload.typeId,
+                clientId: payload.clientId,
+                workerId: payload.workerId,
+                total: payload.total,
+                tranDate: payload.tranDate
+            });
+        }
+        setTimeout(() => {
+            dispatch(getTransactions())
+        }, 50);
+    }
+}
+
+export function transactionDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete transaction', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getTransactions());
+        }, 50)
+    }
+}
+
+export function subscriptionSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new subscription', {
+                workerId: payload.workerId,
+                clientId: payload.clientId,
+                magazineId: payload.magazineId,
+                subBegin: payload.subBegin,
+                subEnd: payload.subEnd,
+                total: payload.total
+            });
+        } else {
+            ipcRenderer.send('update subscription', {
+                id: payload.id,
+                workerId: payload.workerId,
+                clientId: payload.clientId,
+                magazineId: payload.magazineId,
+                subBegin: payload.subBegin,
+                subEnd: payload.subEnd,
+                total: payload.total
+            });
+        }
+        setTimeout(() => {
+            dispatch(getSubscriptions())
+        }, 50);
+    }
+}
+
+export function subscriptionDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete subscription', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getSubscriptions());
+        }, 50)
+    }
+}
+
+export function orderSubmit(payload) {
+    return async dispatch => {
+        if(payload.new) {
+            ipcRenderer.send('submit new order', {
+                typeId: payload.typeId,
+                sender: payload.sender,
+                clientId: payload.clientId,
+                weight: payload.weight,
+                cost: payload.cost,
+                pickupDate: payload.pickupDate
+            });
+        } else {
+            ipcRenderer.send('update subscription', {
+                id: payload.id,
+                typeId: payload.typeId,
+                sender: payload.sender,
+                clientId: payload.clientId,
+                weight: payload.weight,
+                cost: payload.cost,
+                pickupDate: payload.pickupDate
+            });
+        }
+        setTimeout(() => {
+            dispatch(getOrders())
+        }, 50);
+    }
+}
+
+export function orderDelete(payload) {
+    return async dispatch => {
+        ipcRenderer.send('delete order', {
+            id: payload.id
+        });
+        setTimeout(() => {
+            dispatch(getOrders());
         }, 50)
     }
 }

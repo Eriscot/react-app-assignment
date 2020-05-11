@@ -19,7 +19,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import CloseIcon from '@material-ui/icons/Close';
 import DrawerList from './DrawerList';
-import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     drawerHeader: {
@@ -67,6 +66,10 @@ export default function (props) {
         setOpenMenu(false);
     };
 
+    const handleForm = () => {
+        props.history.push('/forms');
+    }
+
     const handleLogout = () => {
         console.log(props);
         props.userLogout();
@@ -109,6 +112,7 @@ export default function (props) {
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={openMenu} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                        <MenuItem onClick={handleForm}>Формы</MenuItem>
                                         <MenuItem onClick={handleLogout}>Выход</MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>

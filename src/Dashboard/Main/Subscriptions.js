@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getSubscriptions } from "../../redux/actions/userActionCreators";
 import SubscriptionsComponent from "./SubscriptionsComponent";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = state => {
     return {
@@ -17,4 +18,4 @@ const mapDispatchToProps = dispatch => {
 
 console.log('test');
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubscriptionsComponent));

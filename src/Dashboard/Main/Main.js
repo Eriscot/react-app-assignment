@@ -24,6 +24,10 @@ import MagazineForm from './MagazineForm';
 import WorkersForm from './WorkersForm';
 import ClientsForm from './ClientsForm';
 import PensionsForm from './PensionsForm';
+import TransactionsForm from './TransactionsForm';
+import SubscriptionsForm from './SubscriptionsForm';
+import OrdersForm from './OrdersForm';
+import PensionByYearComponent from './Forms/PensionByYear';
 
 const useStyles = makeStyles(theme => (
     {
@@ -40,6 +44,9 @@ export default function() {
         <main>
             <Container maxWidth="xl" className={classes.main}>
                 <Switch>
+                    <Route path="/forms">
+                        <PensionByYearComponent />
+                    </Route>
                     <Route path="/magazines/new">
                         <MagazineForm />
                     </Route>
@@ -112,6 +119,12 @@ export default function() {
                     <Route path="/clients">
                         <Clients />
                     </Route>
+                    <Route path="/transactions/new">
+                        <TransactionsForm />
+                    </Route>
+                    <Route path="/transactions/:id">
+                        <TransactionsForm />
+                    </Route>
                     <Route path="/transactions">
                         <Transactions />
                     </Route>
@@ -124,8 +137,20 @@ export default function() {
                     <Route path="/pensions">
                         <Pensions />
                     </Route>
+                    <Route path="/subscriptions/new">
+                        <SubscriptionsForm />
+                    </Route>
+                    <Route path="/subscriptions/:id">
+                        <SubscriptionsForm />
+                    </Route>
                     <Route path="/subscriptions">
                         <Subscriptions />
+                    </Route>
+                    <Route path="/orders/new">
+                        <OrdersForm />
+                    </Route>
+                    <Route path="/orders/:id">
+                        <OrdersForm />
                     </Route>
                     <Route path="/orders">
                         <Orders />
@@ -138,9 +163,6 @@ export default function() {
                     </Route>
                     <Route path="/workers">
                         <Workers />
-                    </Route>
-                    <Route path="/test">
-                        <PositionForm />
                     </Route>
                 </Switch>
             </Container>

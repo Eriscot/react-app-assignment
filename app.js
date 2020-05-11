@@ -253,7 +253,7 @@ ipcMain.on('get transactions', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query(`SELECT [Transaction].id, type, Worker.name as worker, Client.name as client, total, tranDate 
+                    .query(`SELECT [Transaction].id, type, Worker.name as worker, Client.name as client, total, tranDate, typeId, clientId, workerId
                         FROM [Transaction] INNER JOIN TransType ON TransType.id = typeId 
                             INNER JOIN Client ON Client.id = clientId INNER JOIN Worker On Worker.id = workerId`)
                     .then(result => {
@@ -279,7 +279,7 @@ ipcMain.on('get pensions', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query(`SELECT Pension.id, Client.name as client, Worker.name as worker, total, date 
+                    .query(`SELECT Pension.id, Client.name as client, Worker.name as worker, total, date, clientId, workerId
                     FROM Pension INNER JOIN Client ON Client.id = clientId
                     INNER JOIN Worker on Worker.id = workerId`)
                     .then(result => {
@@ -304,7 +304,7 @@ ipcMain.on('get orders', async (event) => {
         await pool.connect()
             .then(pool => {
                 return pool.request()
-                    .query(`SELECT [Order].id, type, sender, name, weight, cost, pickupDate 
+                    .query(`SELECT [Order].id, type, sender, name, weight, cost, pickupDate, typeId, clientId
                     FROM [Order] INNER JOIN Client ON Client.id = clientId
                     INNER JOIN OrderType on OrderType.id = typeId`)
                     .then(result => {
@@ -330,7 +330,7 @@ ipcMain.on('get subscriptions', async (event) => {
             .then(pool => {
                 return pool.request()
                     .query(`SELECT Subscription.id, Worker.name as worker, Client.name as client, Magazine.name as magazine,
-                    subBegin, subEnd, total
+                    subBegin, subEnd, total, workerId, clientId, magazineId
                     FROM Subscription INNER JOIN Client ON Client.id = clientId
                     INNER JOIN Worker on Worker.id = workerId
                     INNER JOIN Magazine on Magazine.id = magazineId`)
@@ -861,7 +861,7 @@ ipcMain.on('submit new pension', async (event, data) => {
                 return pool.request()
                     .input('clientId', sql.Int, data.clientId)
                     .input('workerId', sql.NVarChar, data.workerId)
-                    .input('total', sql.Int, data.total)
+                    .input('total', sql.Money, data.total)
                     .input('date', sql.DateTime, data.date)
                     .query(`INSERT INTO Pension VALUES(@clientId, @workerId, @total, @date)`)
                     .then(result => {
@@ -880,7 +880,7 @@ ipcMain.on('delete pension', async (event, data) => {
             .then(pool => {
                 return pool.request()
                     .input('id', sql.Int, data.id)
-                    .query(`DELETE FROM Client WHERE id = @id`)
+                    .query(`DELETE FROM Pension WHERE id = @id`)
                     .then(result => {
                         console.log(result.recordset);
                     });
@@ -899,9 +899,193 @@ ipcMain.on('update pension', async (event, data) => {
                     .input('id', sql.Int, data.id)
                     .input('clientId', sql.Int, data.clientId)
                     .input('workerId', sql.NVarChar, data.workerId)
-                    .input('total', sql.Int, data.total)
+                    .input('total', sql.Money, data.total)
                     .input('date', sql.DateTime, data.date)
-                    .query(`UPDATE Client SET clientId = @clientid, workerId = @workerId, total = @total, date = @date WHERE id = @id`)
+                    .query(`UPDATE Pension SET clientId = @clientid, workerId = @workerId, total = @total, date = @date WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new transaction', async (event, data) => {
+    try {
+        console.log('blah blab blab');
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('typeId', sql.Int, data.typeId)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('workerId', sql.NVarChar, data.workerId)
+                    .input('total', sql.Money, data.total)
+                    .input('tranDate', sql.DateTime, data.tranDate)
+                    .query(`INSERT INTO [Transaction] VALUES(@typeId, @clientId, @workerId, @total, @tranDate)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete transaction', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM [Transaction] WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update transaction', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('typeId', sql.Int, data.typeId)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('workerId', sql.NVarChar, data.workerId)
+                    .input('total', sql.Money, data.total)
+                    .input('tranDate', sql.DateTime, data.tranDate)
+                    .query(`UPDATE [Transaction] SET typeId = @typeId, clientId = @clientid, workerId = @workerId, total = @total, tranDate = @tranDate WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new subscription', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('workerId', sql.NVarChar, data.workerId)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('magazineId', sql.Int, data.magazineId)
+                    .input('subBegin', sql.DateTime, data.subBegin)
+                    .input('subEnd', sql.DateTime, data.subEnd)
+                    .input('total', sql.Money, data.total)
+                    .query(`INSERT INTO Subscription VALUES(@workerId, @clientId, @magazineId, @subBegin, @subEnd, @total)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete subscription', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM Subscription WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update subscription', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('workerId', sql.NVarChar, data.workerId)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('magazineId', sql.Int, data.magazineId)
+                    .input('subBegin', sql.DateTime, data.subBegin)
+                    .input('subEnd', sql.DateTime, data.subEnd)
+                    .input('total', sql.Money, data.total)
+                    .query(`UPDATE Subscription SET workerId = @workerId, clientId = @clientid, magazineId = @magazineId, subBegin = @subBegin, subEnd = @subEnd, total = @total
+                    WHERE id = @id`)
+                    .then(result => {
+                        console.log(result);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('submit new order', async (event, data) => {
+    try {
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('typeId', sql.NVarChar, data.typeId)
+                    .input('sender', sql.NVarChar, data.sender)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('weight', sql.Float, data.weight)
+                    .input('cost', sql.Money, data.cost)
+                    .input('pickupDate', sql.DateTime, data.pickupDate)
+                    .query(`INSERT INTO [Order] VALUES(@typeId, @sender, @clientId, @weight, @cost, @pickupDate)`)
+                    .then(result => {
+                        console.log('test');
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('delete order', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .query(`DELETE FROM [Order] WHERE id = @id`)
+                    .then(result => {
+                        console.log(result.recordset);
+                    });
+            });
+    } catch(e) {
+        console.error(e);
+    }
+});
+
+ipcMain.on('update order', async (event, data) => {
+    try {
+        console.log(data.id);
+        await pool.connect()
+            .then(pool => {
+                return pool.request()
+                    .input('id', sql.Int, data.id)
+                    .input('typeId', sql.NVarChar, data.typeId)
+                    .input('sender', sql.NVarChar, data.sender)
+                    .input('clientId', sql.Int, data.clientId)
+                    .input('weight', sql.Float, data.weight)
+                    .input('cost', sql.Money, data.cost)
+                    .input('pickupDate', sql.DateTime, data.pickupDate)
+                    .query(`UPDATE [Order] SET typeId = @typeId, sender = @sender, clientId = @clientId, weight = @weight, cost = @cost, pickupDate = @pickupDate
+                    WHERE id = @id`)
                     .then(result => {
                         console.log(result);
                     });

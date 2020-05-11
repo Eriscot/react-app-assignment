@@ -63,6 +63,26 @@ const TableComponent = props => {
                     id
                 })
                 break;
+            case '/pensions':
+                props.pensionDelete({
+                    id
+                });
+                break;
+            case '/transactions':
+                props.transactionDelete({
+                    id
+                });
+                break;
+            case '/subscriptions':
+                props.subscriptionDelete({
+                    id
+                });
+                break;
+            case '/orders':
+                props.orderDelete({
+                    id
+                });
+                break;
             default:
                 return;
         }
@@ -114,7 +134,6 @@ const TableComponent = props => {
                                             className={classes.button}
                                             startIcon={<DeleteIcon />}
                                             onClick={() => {
-                                                console.log(row);
                                                 // eslint-disable-next-line no-restricted-globals
                                                 if(confirm('Вы действительно хотите удалить запись?')) deleteHandler(row[0].value);
                                             }}
