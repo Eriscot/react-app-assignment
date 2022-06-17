@@ -15,7 +15,7 @@
     "@testing-library/user-event": "^7.2.1",
     "clsx": "^1.1.0",
     "date-fns": "^2.0.0-beta.5",
-    "electron": "^9.4.0",
+    "electron": "^15.5.5",
     "mssql": "^6.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
